@@ -19,7 +19,17 @@ function Center(){
             return e.id!== userId
             }))
         }
-
+    
+    function handleUpdate(){
+        let newUsers = userList.map((element)=>{
+            if(element.id === id){
+                element.fname = fname
+                element.lname = lname            
+            }
+            return element
+        })
+        setUserlist([...newUsers])
+    }
 
     return(
         <>
@@ -27,12 +37,13 @@ function Center(){
                 
                 <form action="" method="post" className="flex flex-col border-4 h-min rounded-3xl px-2 py-2 justify-evenly w-96">
                     <label htmlFor="id" className="p-3 text-xl font-sans font-semibold text-white">ID :</label>
-                    <input onChange={(e)=>{setId(e.target.value)}} type="number" min="1" name="id" className="p-2 outline-none"placeholder="Id"/>
+                    <input value={id} onChange={(e)=>{setId(e.target.value)}} type="number" min="1" name="id" className="p-2 outline-none"placeholder="Id"/>
                     <label htmlFor="prenom" className="p-3 text-xl font-sans font-semibold text-white">First Name :</label>
-                    <input onChange={(e)=>{setFname(e.target.value)}} type="text" name="prenom" className="p-2 outline-none"  placeholder="John"/>
+                    <input value={fname} onChange={(e)=>{setFname(e.target.value)}} type="text" name="prenom" className="p-2 outline-none"  placeholder="John"/>
                     <label htmlFor="" className="p-3 text-xl font-sans font-semibold text-white">Last Name :</label>
-                    <input onChange={(e)=>{setLname(e.target.value)}} type="text" name="nom" className="p-2 outline-none" placeholder="Pork"/>
+                    <input value={lname} onChange={(e)=>{setLname(e.target.value)}} type="text" name="nom" className="p-2 outline-none" placeholder="Pork"/>
                     <button type="submit" className="mt-5 mx-24 text-xl text-white border-2 w-1/2 rounded-md bg-green-700" onClick={showUsers}>Save</button>
+                    <button type="submit" className="mt-5 mx-24 text-xl text-white border-2 w-1/2 rounded-md bg-yellow-500" onClick={handleUpdate}>Update</button>
                 </form>
                 
             </div>
@@ -55,7 +66,11 @@ function Center(){
                                     <td  className="text-left text-stone-400 border border-gray-300">{element.lname}</td>
                                     <td className="text-left border border-gray-300">
                                         <button className="rounded-lg px-2 py-1 mr-2 ml-2 text-white bg-red-700" onClick={()=>Del_User(element.id)}>Delete</button>
-                                        <button className="rounded-lg px-2 py-1 text-white bg-yellow-400">Modify</button>
+                                        <button className="rounded-lg px-2 py-1 text-white bg-yellow-400" onClick={()=>{
+                                            setId(element.id)
+                                            setFname(element.fname)
+                                            setLname(element.lname)
+                                        }}>Modify</button>
                                     </td>
                                 </tr>
                             </>
